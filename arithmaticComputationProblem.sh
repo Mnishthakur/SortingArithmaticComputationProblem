@@ -28,3 +28,12 @@ for key in "${!results[@]}"
 do
   echo "$key = ${results[$key]}"
 done
+# Read the values from the dictionary into an array
+array=()
+for key in "${!results[@]}"
+do
+  array+=("${results[$key]}")
+done
+
+# Print the array
+echo "Array: ${array[@]}"
