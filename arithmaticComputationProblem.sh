@@ -23,13 +23,12 @@ c=4
 result=$((a % b + c))
 results["a % b + c"]=$result
 
-# Sort the results in descending order
-sorted_keys=($(echo "${!results[@]}" | tr ' ' '\n' | sort -nrk3 | tr '\n' ' '))
-sorted_values=($(echo "${results[@]}" | tr ' ' '\n' | sort -nr | tr '\n' ' '))
+# Sort the results in ascending order
+sorted_results=($(for key in "${!results[@]}"; do echo "$key ${results[$key]}"; done | sort -k2 -n))
 
-# Print the results in descending order
-echo "Results (in descending order):"
-for i in ${!sorted_keys[@]}
+# Print the sorted results
+echo "Computation results in ascending order:"
+for result in "${sorted_results[@]}"
 do
-  echo "${sorted_keys[$i]} = ${sorted_values[$i]}"
+  echo "$result"
 done
