@@ -1,5 +1,6 @@
+#!/bin/zsh
 # Initialize the dictionary
-declare -A results
+declare -a results
 
 # Compute a + b * c and store the result in the dictionary
 a=2
@@ -22,18 +23,13 @@ c=4
 result=$((a % b + c))
 results["a % b + c"]=$result
 
-# Print the results in the dictionary
-echo "Results:"
-for key in "${!results[@]}"
-do
-  echo "$key = ${results[$key]}"
-done
-# Read the values from the dictionary into an array
-array=()
-for key in "${!results[@]}"
-do
-  array+=("${results[$key]}")
-done
+# Sort the results in descending order
+sorted_keys=($(echo "${!results[@]}" | tr ' ' '\n' | sort -nrk3 | tr '\n' ' '))
+sorted_values=($(echo "${results[@]}" | tr ' ' '\n' | sort -nr | tr '\n' ' '))
 
-# Print the array
-echo "Array: ${array[@]}"
+# Print the results in descending order
+echo "Results (in descending order):"
+for i in ${!sorted_keys[@]}
+do
+  echo "${sorted_keys[$i]} = ${sorted_values[$i]}"
+done
